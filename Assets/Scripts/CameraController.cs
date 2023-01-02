@@ -4,24 +4,55 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Tooltip("An array of transforms representing camera positions")]
-    [SerializeField] Transform[] povs;
-    [SerializeField] float speed;
+    [SerializeField] Transform target;
+    [SerializeField] public Vector4 distance = new Vector3(0f, 0.5f, -3f);
+    [SerializeField] float smoothTime = 0.3f;
 
-    private int index = 0;
-    private Vector3 target;
+    Transform myT;
 
-    private void Upodate(){
+    public Vector3 velocity = Vector3.one;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) index = 0;
-        else if (Input.GetKeyDown(KeyCode.Keypad2)) index = 1;
+    public bool thirdPerson = true;
 
-        target = povs[index].position;
+    private void Awake() {
+        myT = transform;
     }
 
-    private void FixedUpdate(){
-        transform.position = Vector3.MoveTowards(transform.position, target, Time.deltaTime * speed);
-        transform.forward = povs[index].forward;
+    private void Start() {
+        ChangeVisibilityOfTarget();
+    }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Alpha1)) {
+            thirdPerson = false;
+            ChangeVisibilityOfTarget();
+        } else if(Input.GetKeyDown(KeyCode.Alpha2)) {
+            thirdPerson = true;
+            ChangeVisibilityOfTarget();
+        }
+    }
+
+    private void LateUpdate() {
+        Vector3 toPos= target.position + (target.rotation * distance);
+        if(thirdPerson) {
+            myT.position = Vector3.SmoothDamp(myT.position, toPos, ref velocity, smoothTime);
+            myT.LookAt(target, target.up);
+        } else {
+            myT.position = target.position;
+            myT.rotation = target.rotation;            
+        }
+    }
+
+    private void ChangeVisibilityOfTarget() {
+        Component[] components = target.gameObject.GetComponentsInChildren(typeof(Renderer));
+        foreach(Component component in components) {
+            Renderer r = (Renderer) component;
+            if(thirdPerson) {
+                r.enabled = true;
+            } else {
+                r.enabled = false;
+            }
+        }
     }
 
 }
