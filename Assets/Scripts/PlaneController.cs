@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlaneController : MonoBehaviour {
     [Header("Plane Stats")]
@@ -19,6 +20,8 @@ public class PlaneController : MonoBehaviour {
     private float pitch;
     private float yaw;
 
+    private float time = 0.0f;
+
     private float responseModifier {
         get{
             return (rb.mass / 5f) * responsiveness;
@@ -26,7 +29,7 @@ public class PlaneController : MonoBehaviour {
     }
 
     Rigidbody rb;
-    [SerializeField] TextMeshProUGUI hud;
+    [SerializeField] Text text;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -48,8 +51,10 @@ public class PlaneController : MonoBehaviour {
     }
 
     private void Update() {
+        time += Time.deltaTime;
+        PlayerPrefs.SetFloat("score", time);
         HandleInputs();
-        UpdateHUD();
+        UpdateStats();
     }
 
     private void FixedUpdate() {
@@ -61,10 +66,11 @@ public class PlaneController : MonoBehaviour {
         rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
     }
 
-    private void UpdateHUD() {
-        hud.text = "Throttle: " + throttle.ToString("F0") + "%\n";
-        hud.text += "Airspeed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
-        hud.text += "Altitude: " + transform.position.y.ToString("F0") + " m";
+    private void UpdateStats() {
+        text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
+        text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
+        text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
+        text.text += "Score: " + time.ToString("F1") + "s";
     }
 
 }
