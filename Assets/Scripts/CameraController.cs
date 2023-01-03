@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
     [SerializeField] Transform target;
     [SerializeField] public Vector4 distance = new Vector3(0f, 0.5f, -3f);
     [SerializeField] float smoothTime = 0.3f;

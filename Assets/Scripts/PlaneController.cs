@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlaneController : MonoBehaviour
-{
+public class PlaneController : MonoBehaviour {
     [Header("Plane Stats")]
     [Tooltip("How much the throttle ramps up or down.")]
-    public float throttleIncrement = 0.1f;
+    public float throttleIncrement = 1f;
     [Tooltip("Maximum engine thrust when at 100% throttle.")]
     public float maxThrust = 300f;
     [Tooltip("How responsive the plane is when rolling, pitching and yawing.")]
@@ -67,10 +66,5 @@ public class PlaneController : MonoBehaviour
         hud.text += "Airspeed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
         hud.text += "Altitude: " + transform.position.y.ToString("F0") + " m";
     }
-
-
-
-
-
 
 }
