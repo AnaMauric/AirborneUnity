@@ -29,7 +29,6 @@ public class PlaneController : MonoBehaviour {
     }
 
     Rigidbody rb;
-    //[SerializeField] TextMeshProUGUI hud;
     [SerializeField] Text text;
 
     private void Awake() {
@@ -68,10 +67,6 @@ public class PlaneController : MonoBehaviour {
     }
 
     private void UpdateStats() {
-        //hud.text = "Throttle: " + throttle.ToString("F0") + "%\n";
-        //hud.text += "Airspeed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
-        //hud.text += "Altitude: " + transform.position.y.ToString("F0") + " m";
-
         text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
         text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
         text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
