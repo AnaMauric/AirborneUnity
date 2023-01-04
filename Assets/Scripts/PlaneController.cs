@@ -15,24 +15,27 @@ public class PlaneController : MonoBehaviour {
     [Tooltip("How much lift force this plane generates as it gains speed.")]
     public float lift = 300f;
 
+    public GameObject explosion = null;
+
+    Rigidbody rb;
+    [SerializeField] Text text;
+
     private float throttle;
     private float roll;
     private float pitch;
     private float yaw;
 
     private float time = 0.0f;
-
-    private float responseModifier {
-        get{
-            return (rb.mass / 5f) * responsiveness;
-        }
-    }
-
-    Rigidbody rb;
-    [SerializeField] Text text;
+    private float fuelConsumption = 0.2f; // liters/second
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+    }
+
+    private float responseModifier {
+        get {
+            return (rb.mass / 5f) * responsiveness;
+        }
     }
 
     private void HandleInputs(){
@@ -52,6 +55,11 @@ public class PlaneController : MonoBehaviour {
 
     private void Update() {
         time += Time.deltaTime;
+        FuelManager.fuel -= Time.deltaTime * fuelConsumption;
+        if(FuelManager.fuel < 0) { // GameOver
+            gameObject.SetActive(false); // hides player
+            Instantiate(explosion, transform.position, Quaternion.identity); // instantiate particle system
+        }
         PlayerPrefs.SetFloat("score", time);
         HandleInputs();
         UpdateStats();
@@ -70,7 +78,8 @@ public class PlaneController : MonoBehaviour {
         text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
         text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
         text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
-        text.text += "Score: " + time.ToString("F1") + "s";
+        text.text += "Score: " + time.ToString("F1") + "s\n";
+        text.text += "Fuel: " + FuelManager.fuel.ToString("F1") + "l";
     }
 
 }
