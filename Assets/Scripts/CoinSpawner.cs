@@ -6,11 +6,15 @@ public class CoinSpawner : MonoBehaviour {
 
     public GameObject coin;
 
-    [Range(1, 10)]
+    [Range(0.1f, 100)]
     public float rate;
 
-    int min = 0;
-    int max = 100;
+    int xMin = -150;
+    int yMin = -150;
+    int zMin = 50;
+    int xMax = 150;
+    int yMax = 150;
+    int zMax = 350;
 
     void Start() {
         InvokeRepeating("SpawnCoin", 0, rate);
@@ -19,6 +23,7 @@ public class CoinSpawner : MonoBehaviour {
     void SpawnCoin() {
         Instantiate(coin, transform.position, transform.rotation);
 
-        transform.position = new Vector3(Random.Range(min, max), Random.Range(min, max), Random.Range(min, max));
+        transform.position = new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), Random.Range(zMin, zMax));
     }
+
 }

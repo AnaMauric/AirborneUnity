@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6643224728641956096}
   - component: {fileID: 8923195434317094346}
   - component: {fileID: 7787879727476810087}
+  - component: {fileID: 9111402633264212813}
+  - component: {fileID: -8232525514474421344}
   m_Layer: 0
   m_Name: SpawnableCoin
   m_TagString: Untagged
@@ -26,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6977609127689468959}
-  m_LocalRotation: {x: -0.70710665, y: 0, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: 5.81, y: 6.61, z: 14.67}
-  m_LocalScale: {x: 5.92945, y: 5.92945, z: 5.92945}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 20, y: 40, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -102,3 +104,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!135 &9111402633264212813
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977609127689468959}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8232525514474421344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977609127689468959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dce568bf8b42da4e93141d0942e4075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinCollisionParticleSystem: {fileID: 765402397700938055, guid: fd23d1b995a77fc4da6ce72b80110318, type: 3}
