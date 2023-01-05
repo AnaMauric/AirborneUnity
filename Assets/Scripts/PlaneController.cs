@@ -17,6 +17,8 @@ public class PlaneController : MonoBehaviour {
 
     public GameObject explosion = null;
 
+    public GameObject fire = null;
+
     Rigidbody rb;
     [SerializeField] Text text;
 
@@ -24,6 +26,8 @@ public class PlaneController : MonoBehaviour {
     private float roll;
     private float pitch;
     private float yaw;
+
+    public RawImage pointer = null;
 
     private float time = 0.0f;
     private float fuelConsumption = 0.2f; // liters/second
@@ -60,7 +64,10 @@ public class PlaneController : MonoBehaviour {
         }
             
         throttle = Mathf.Clamp(throttle, 0f, 100f);
-        
+
+        //fire.transform.localScale = new Vector3(1f, (1f), 1f);
+        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 80f);
+        fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
     private void Update() {
@@ -74,7 +81,7 @@ public class PlaneController : MonoBehaviour {
         PlayerPrefs.SetFloat("score", time);
 
         HandleInputs();
-        UpdateStats();
+        UpdateInfo();
     }
 
     private void FixedUpdate() {
@@ -104,12 +111,15 @@ public class PlaneController : MonoBehaviour {
 
     }
 
-    private void UpdateStats() {
+    private void UpdateInfo() {
         text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
         text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
         text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
         text.text += "Score: " + time.ToString("F1") + "s\n";
         text.text += "Fuel: " + FuelManager.fuel.ToString("F1") + "l";
+
+        pointer.rectTransform.localEulerAngles = new Vector3(0f, 0f, 105f - 210f * FuelManager.fuel / FuelManager.initialFuel);
+
     }
 
 }
