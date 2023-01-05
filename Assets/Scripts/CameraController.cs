@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
     [SerializeField] Transform target;
     [SerializeField] public Vector4 distance = new Vector3(0f, 0.5f, -3f);
-    [SerializeField] float smoothTime = 0.3f;
+    [SerializeField] float smoothTime;
 
     Transform myT;
 
@@ -32,13 +32,19 @@ public class CameraController : MonoBehaviour {
     }
 
     private void LateUpdate() {
+
+
         Vector3 toPos= target.position + (target.rotation * distance);
         if(thirdPerson) {
             myT.position = Vector3.SmoothDamp(myT.position, toPos, ref velocity, smoothTime);
-            myT.LookAt(target, target.up);
+
+            Quaternion modifiedRotation = Quaternion.Euler(target.rotation.eulerAngles.x, target.rotation.eulerAngles.y, 0.0f);
+
+            Vector3 targetPosition = target.position + modifiedRotation * Vector3.forward * 12.5f;
+            myT.LookAt(targetPosition, Vector3.up);
         } else {
             myT.position = target.position;
-            myT.rotation = target.rotation;            
+            myT.rotation = target.rotation;
         }
     }
 
