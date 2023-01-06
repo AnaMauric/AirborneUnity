@@ -5,16 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class ExplosionDestroyRestart : MonoBehaviour
 {
+    public string type = false;
+
     private ParticleSystem ps;
 
     void Start() {
-        ps = GetComponent<ParticleSystem>();
+        //ps = GetComponent<ParticleSystem>();
+        if (isNewInstance == false) return;
+        Invoke("goToMainMenu", 2f);
+        Destroy(gameObject, 2f);
+
     }
 
     void Update() {
-        if(!ps.IsAlive()) {
-            Destroy(gameObject);
-            SceneManager.LoadScene("MainMenu");
-        }
+        //if(!ps.IsAlive()) {
+    
+        //}
+    }
+
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

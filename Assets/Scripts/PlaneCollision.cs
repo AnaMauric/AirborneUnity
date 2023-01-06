@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class PlaneCollision : MonoBehaviour
 {
-    public GameObject explosion = null;
+    private GameObject explosion = null;
+
+    void Awake()
+    {
+        explosion = GameObject.Find("CoolExplosion");
+    }
 
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Player") {
             other.gameObject.SetActive(false); // hides player
-            Instantiate(explosion, other.transform.position, Quaternion.identity); // instantiate particle system
+            GameObject instance = Instantiate(explosion, other.transform.position, Quaternion.identity); // instantiate particle system
+            instance.GetComponent<ExplosionDestroyRestart>().isNewInstance = true;
         }
     }
 

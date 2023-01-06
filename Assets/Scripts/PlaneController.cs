@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
 
 public class PlaneController : MonoBehaviour {
     [Header("Plane Stats")]
@@ -15,12 +15,12 @@ public class PlaneController : MonoBehaviour {
     [Tooltip("How much lift force this plane generates as it gains speed.")]
     public float lift = 300f;
 
-    public GameObject explosion = null;
+    private GameObject explosion = null;
 
     public GameObject fire = null;
 
     Rigidbody rb;
-    [SerializeField] Text text;
+    //[SerializeField] Text text;
 
     private float throttle;
     private float roll;
@@ -29,6 +29,9 @@ public class PlaneController : MonoBehaviour {
 
     public RawImage pointer = null;
 
+    public GameObject textMeshProGameObject;
+    private TextMeshProUGUI timeText;
+
     private float time = 0.0f;
     private float fuelConsumption = 0.2f; // liters/second
 
@@ -36,7 +39,12 @@ public class PlaneController : MonoBehaviour {
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+
+        explosion = GameObject.Find("CoolExplosion");
+        timeText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
+
     }
+
 
     private float responseModifier {
         get {
@@ -49,9 +57,9 @@ public class PlaneController : MonoBehaviour {
         pitch = Input.GetAxis("Pitch");
         yaw = Input.GetAxis("Yaw");
 
-        if (FuelManager.fuel < -50f)
+        if (FuelManager.fuel < 0f)
         {
-            throttle = 10f;
+            throttle = 0f;
             return;
         }
         if (Input.GetKey(KeyCode.Space)) {
@@ -63,20 +71,19 @@ public class PlaneController : MonoBehaviour {
             throttle = 50f;
         }
             
-        throttle = Mathf.Clamp(throttle, 0f, 100f);
-
+        throttle = Mathf.Clamp(throttle, 20f, 100f);
         //fire.transform.localScale = new Vector3(1f, (1f), 1f);
-        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 80f);
+        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 75f);
         fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
     private void Update() {
         time += Time.deltaTime;
         FuelManager.fuel -= Time.deltaTime * fuelConsumption;
-        if(FuelManager.fuel < -0) { // GameOver
-            throttle = 0f;
-            //gameObject.SetActive(false); // hides player
-            //Instantiate(explosion, transform.position, Quaternion.identity); // instantiate particle system
+        if(FuelManager.fuel < 0f) { // GameOver
+            gameObject.SetActive(false); // hides player
+            GameObject instance = Instantiate(explosion, transform.position, Quaternion.identity); // instantiate particle system
+            instance.GetComponent<ExplosionDestroyRestart>().isNewInstance = true;
         }
         PlayerPrefs.SetFloat("score", time);
 
@@ -112,13 +119,17 @@ public class PlaneController : MonoBehaviour {
     }
 
     private void UpdateInfo() {
-        text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
-        text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
-        text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
-        text.text += "Score: " + time.ToString("F1") + "s\n";
-        text.text += "Fuel: " + FuelManager.fuel.ToString("F1") + "l";
+        //text.text = "Throttle: " + throttle.ToString("F0") + "%\n";
+        //text.text += "Speed: " + (rb.velocity.magnitude * 13.6f).ToString("F0") + "km/h\n";
+        //text.text += "Altitude: " + transform.position.y.ToString("F0") + " m\n";
+        //text.text += "Score: " + time.ToString("F1") + "s\n";
+        //text.text += "Fuel: " + FuelManager.fuel.ToString("F1") + "l";
 
         pointer.rectTransform.localEulerAngles = new Vector3(0f, 0f, 105f - 210f * FuelManager.fuel / FuelManager.initialFuel);
+
+        TimeSpan ts = TimeSpan.FromSeconds(time);
+        string timeString = ts.ToString(@"mm\:ss");
+        timeText.text = timeString;
 
     }
 
