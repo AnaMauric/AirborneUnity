@@ -12,6 +12,8 @@ public class UIButtonScript : MonoBehaviour {
  
     private RectTransform rectTransform;
 
+    public string sceneName = "";
+
     void Start() {
         rectTransform = GetComponent<RectTransform>();
         Button button = GetComponent<Button>();
@@ -20,9 +22,21 @@ public class UIButtonScript : MonoBehaviour {
     }
 
     void OnClick() {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(sceneName);
         FuelManager.fuel = FuelManager.initialFuel;
     }
 
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("woops");
+        // set the button's scale to the hover scale
+        rectTransform.localScale = hoverScale;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // set the button
+        rectTransform.localScale = normalScale;
+    }
 }

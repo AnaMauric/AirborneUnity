@@ -9,9 +9,12 @@ public class MyButton : MonoBehaviour
 {
 
     public Vector3 normalScale = new Vector3(1f, 1f, 1f);
+
     private Vector3 hoverScale = new Vector3(1.05f, 1.05f, 1.05f);
 
     private RectTransform rectTransform;
+
+    public string sceneName = "GameScene";
 
     void Start()
     {
@@ -37,7 +40,7 @@ public class MyButton : MonoBehaviour
 
     void OnClick()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(sceneName);
         FuelManager.fuel = FuelManager.initialFuel;
     }
 

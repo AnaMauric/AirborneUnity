@@ -12,6 +12,7 @@ public class StartApp : MonoBehaviour
     void Start()
     {
         Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
