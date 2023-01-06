@@ -9,9 +9,13 @@ public class ExplosionDestroyRestart : MonoBehaviour
 
     private ParticleSystem ps;
 
+    private AudioSource asrc;
+
     void Start() {
         //ps = GetComponent<ParticleSystem>();
         if (isNewInstance == false) return;
+        asrc = GetComponent<AudioSource>();
+        asrc.Play();
         Invoke("goToMainMenu", 2f);
         Destroy(gameObject, 2f);
 
