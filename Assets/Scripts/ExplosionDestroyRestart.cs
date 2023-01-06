@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ExplosionDestroyRestart : MonoBehaviour
 {
-    public string type = false;
+    public bool isNewInstance = false;
 
     private ParticleSystem ps;
 
