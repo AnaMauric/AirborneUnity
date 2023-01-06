@@ -24,6 +24,7 @@ public class UIButtonScript : MonoBehaviour {
     void OnClick() {
         SceneManager.LoadScene(sceneName);
         FuelManager.fuel = FuelManager.initialFuel;
+        CoinsManager.pickedUpCoins = 0;
     }
 
 
