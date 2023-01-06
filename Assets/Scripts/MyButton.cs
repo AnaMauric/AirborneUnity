@@ -10,7 +10,7 @@ public class MyButton : MonoBehaviour
 
     public Vector3 normalScale = new Vector3(1f, 1f, 1f);
 
-    private Vector3 hoverScale = new Vector3(1.05f, 1.05f, 1.05f);
+    public Vector3 hoverScale = new Vector3(1.025f, 1.025f, 1.025f);
 
     private RectTransform rectTransform;
 

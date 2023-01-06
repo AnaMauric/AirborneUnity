@@ -14,6 +14,7 @@ public class ExplosionDestroyRestart : MonoBehaviour
     void Start() {
         //ps = GetComponent<ParticleSystem>();
         if (isNewInstance == false) return;
+
         asrc = GetComponent<AudioSource>();
         asrc.Play();
         Invoke("goToMainMenu", 2f);

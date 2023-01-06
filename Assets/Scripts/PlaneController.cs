@@ -33,7 +33,6 @@ public class PlaneController : MonoBehaviour {
     private TextMeshProUGUI timeText;
 
     private float time = 0.0f;
-    private float fuelConsumption = 0.2f; // liters/second
 
     private float roller = 0f;
 
@@ -57,11 +56,11 @@ public class PlaneController : MonoBehaviour {
         pitch = Input.GetAxis("Pitch");
         yaw = Input.GetAxis("Yaw");
 
-        if (FuelManager.fuel < 0f)
-        {
-            throttle = 0f;
-            return;
-        }
+        //if (FuelManager.fuel < 0f)
+        //{
+        //    throttle = 0f;
+        //    return;
+        //}
         if (Input.GetKey(KeyCode.Space)) {
             throttle += throttleIncrement;
         } else if(Input.GetKey(KeyCode.LeftControl)) {
@@ -78,9 +77,13 @@ public class PlaneController : MonoBehaviour {
     }
 
     private void Update() {
-        time += Time.deltaTime;
-        FuelManager.fuel -= Time.deltaTime * fuelConsumption;
-        if(FuelManager.fuel < 0f) { // GameOver
+        if (CoinsManager.HasWon() == false)
+        {
+            time += Time.deltaTime;
+            FuelManager.fuel -= Time.deltaTime * FuelManager.fuelConsumption * throttle;
+        }
+
+        if(FuelManager.HasEmptyFuel()) { // GameOver
             gameObject.SetActive(false); // hides player
             GameObject instance = Instantiate(explosion, transform.position, Quaternion.identity); // instantiate particle system
             instance.GetComponent<ExplosionDestroyRestart>().isNewInstance = true;

@@ -8,7 +8,8 @@ public class CoinCollision : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if(other.tag == "Player") {
             Destroy(gameObject);
-            FuelManager.fuel += 1.0f;
+            CoinsManager.pickedUp();
+
             Instantiate(coinCollisionParticleSystem, transform.position, Quaternion.identity); // instantiate particle system
         }
     }
