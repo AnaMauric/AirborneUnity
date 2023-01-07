@@ -8,7 +8,7 @@ public class ZeppelinAI : MonoBehaviour
     public float speed = 5f; // Speed at which the object flies towards the right
     public float rotationRate = 0.5f; // Rotation rate around the target
 
-    void Update()
+    void FixedUpdate()
     {
         // Look at the target
         transform.LookAt(target);
