@@ -62,12 +62,12 @@ public class PlaneController : MonoBehaviour {
         //    return;
         //}
         if (Input.GetKey(KeyCode.Space)) {
-            throttle += throttleIncrement;
-        } else if(Input.GetKey(KeyCode.LeftControl)) {
             throttle -= throttleIncrement;
+        } else if(Input.GetKey(KeyCode.LeftControl)) {
+            //throttle -= throttleIncrement;
         } else
         {
-            throttle = 50f;
+            throttle = 100f;
         }
             
         throttle = Mathf.Clamp(throttle, 20f, 100f);

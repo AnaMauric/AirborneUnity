@@ -9,8 +9,8 @@ public class CloudController : MonoBehaviour
     public float minSpeed = 1f; // the minimum speed for clouds
     public float maxSpeed = 5f; // the maximum speed for clouds
     public int amountOfClouds = 10;
-    public float minScale = 0.5f; 
-    public float maxScale = 0.875f; 
+    public float minScale = 0.6f; 
+    public float maxScale = 1f; 
 
     void Start()
     {
