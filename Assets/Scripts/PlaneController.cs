@@ -33,13 +33,17 @@ public class PlaneController : MonoBehaviour {
 
     public GameObject textMeshProGameObject;
     private TextMeshProUGUI timeText;
+    private AudioSource audioSource;
 
     private float time = 0.0f;
 
     private float roller = 0f;
 
+    private bool hasMovedBefore = false;
+
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 
         // Time displayed in bottom left timer
         timeText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
@@ -70,7 +74,8 @@ public class PlaneController : MonoBehaviour {
         {
             throttle -= throttleIncrement;
         }
-            
+        
+        audioSource.volume = throttle/100f + 0.2f;
         throttle = Mathf.Clamp(throttle, 0f, 100f);
 
         // Hardcoded position of middle fire behind airplane - when the throttle is bigger it gets mroe out
@@ -80,6 +85,11 @@ public class PlaneController : MonoBehaviour {
 
     private void Update() {
 
+        if (throttle > 0f && hasMovedBefore == false)
+        {
+            hasMovedBefore = true;
+            audioSource.Play();
+        }
         // If player has won we don't want to decrement fuel and increment time, since game is over, but he is still flying for few seconds
         if (CoinsManager.HasWon() == false)
         {

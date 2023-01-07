@@ -10,10 +10,11 @@ public class CoinsManager : MonoBehaviour
 {
 
     public static int amountOfCoins = 0;
-    public static int pickedUpCoins = 0; // liters
+    public static int pickedUpCoins = 0; 
 
     public GameObject textMeshProGameObject;
     private static TextMeshProUGUI leftCoinsText;
+
 
     public static void pickedUp()
     {
@@ -51,6 +52,7 @@ public class CoinsManager : MonoBehaviour
     void Start()
     {
         amountOfCoins = transform.childCount;
+        pickedUpCoins = 0;
         leftCoinsText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
         SetUpCoinsText();
     }
