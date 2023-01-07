@@ -38,7 +38,7 @@ public class CoinsManager : MonoBehaviour
 
     public static bool HasWon()
     {
-        return pickedUpCoins >= amountOfCoins;
+        return pickedUpCoins == amountOfCoins;
     }
 
     public static void WonGame()

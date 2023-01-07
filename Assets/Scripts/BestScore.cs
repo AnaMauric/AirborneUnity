@@ -11,11 +11,12 @@ public class BestScore : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteKey("bestScore");
         float score = PlayerPrefs.GetFloat("score", 0);
         float bestScore = PlayerPrefs.GetFloat("bestScore", 0);
 
 
-        if (score < bestScore && CoinsManager.HasWon())
+        if ((score < bestScore || bestScore < 1) && CoinsManager.HasWon())
         {
             PlayerPrefs.SetFloat("bestScore", score);
             bestScore = score;
@@ -24,6 +25,7 @@ public class BestScore : MonoBehaviour
         //scoreText.text = "Score: " + score.ToString("F1") + "s";
         TimeSpan ts = TimeSpan.FromSeconds(bestScore);
         string timeString = ts.ToString(@"mm\:ss");
+        if (bestScore == 0) timeString = "--:--";
         GetComponent<TextMeshProUGUI>().text = timeString;
     }
 }
