@@ -9,18 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 432899b05d138d647b4fc568de8c5683
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Summer.unity
     guid: bb27a239beb403b488981abdc742abba
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Spring.unity
     guid: 2939580a65a7f764ebafac7683029c29
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Fall.unity
     guid: 29cf7b75dc3016846b55ae37955f0660
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Winter.unity
     guid: 4e77f570d0722284fb91a971a0be379a
   m_configObjects: {}
