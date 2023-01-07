@@ -35,11 +35,10 @@ public class CloudController : MonoBehaviour
         Vector2 speed = new Vector2(speedX, speedY);
 
         float scale = Random.Range(minScale, maxScale);
-        cloud.transform.localScale = new Vector3(scale, scale, scale);
+        cloud.transform.localScale = new Vector3(21.3f * scale, 36.35f * scale, 27.5f * scale);
 
-        float yRotation = Random.Range(0, 360);
-        float xRotation = Random.Range(0, 360);
-        cloud.transform.Rotate(0, yRotation, 0);
+        float randomRotation = Random.Range(0, 360);
+        cloud.transform.Rotate(randomRotation, 0, 0);
         
 
         // add a CloudMover component to the cloud and set its speed

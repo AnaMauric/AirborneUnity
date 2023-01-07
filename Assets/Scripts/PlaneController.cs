@@ -15,7 +15,9 @@ public class PlaneController : MonoBehaviour {
     [Tooltip("How much lift force this plane generates as it gains speed.")]
     public float lift = 300f;
 
-    private GameObject explosion = null;
+    // Fuel Consupmtion is in FuelManager script
+
+    public GameObject explosion = null;
 
     public GameObject fire = null;
 
@@ -39,9 +41,8 @@ public class PlaneController : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody>();
 
-        explosion = GameObject.Find("CoolExplosion");
+        // Time displayed in bottom left timer
         timeText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
-
     }
 
 
@@ -61,29 +62,32 @@ public class PlaneController : MonoBehaviour {
         //    throttle = 0f;
         //    return;
         //}
-        if (Input.GetKey(KeyCode.Space)) {
-            throttle -= throttleIncrement;
-        } else if(Input.GetKey(KeyCode.LeftControl)) {
-            //throttle -= throttleIncrement;
-        } else
+        if (Input.GetKey(KeyCode.Space))
         {
-            throttle = 100f;
+            throttle += throttleIncrement;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            throttle -= throttleIncrement;
         }
             
-        throttle = Mathf.Clamp(throttle, 20f, 100f);
-        //fire.transform.localScale = new Vector3(1f, (1f), 1f);
+        throttle = Mathf.Clamp(throttle, 0f, 100f);
+
+        // Hardcoded position of middle fire behind airplane - when the throttle is bigger it gets mroe out
         Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 75f);
         fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
     private void Update() {
+
+        // If player has won we don't want to decrement fuel and increment time, since game is over, but he is still flying for few seconds
         if (CoinsManager.HasWon() == false)
         {
             time += Time.deltaTime;
             FuelManager.fuel -= Time.deltaTime * FuelManager.fuelConsumption * throttle;
         }
 
-        if(FuelManager.HasEmptyFuel()) { // GameOver
+        if(FuelManager.HasEmptyFuel()) { // GameOver because of empty fuel
             gameObject.SetActive(false); // hides player
             GameObject instance = Instantiate(explosion, transform.position, Quaternion.identity); // instantiate particle system
             instance.GetComponent<ExplosionDestroyRestart>().isNewInstance = true;
@@ -96,28 +100,29 @@ public class PlaneController : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        if (yaw == 0)
-        {
-            roller /= 1.1f;
-        }
-        else
-        {
-            roller = -yaw;
-        }
-        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
-
-        rb.AddTorque(-transform.right * pitch * responseModifier);
-        rb.AddTorque(transform.up * yaw * responseModifier);
-
-        //rb.AddForce(transform.right * pitch * 10f);
-        // apply force along the global x and z axes to make the object roll slightly
-        //float rollAmount = Mathf.Lerp(0.0f, 10.0f, Mathf.Abs(yaw* 100));
-        //rb.AddRelativeTorque(transform.right * rollAmount);
-        //rb.AddRelativeTorque(-transform.forward * rollAmount);
-
         rb.AddForce(transform.forward * maxThrust * throttle);
+        rb.AddTorque(transform.up * yaw * responseModifier);
+        rb.AddTorque(-transform.right * pitch * responseModifier);
+        rb.AddTorque(-transform.forward * roll * responseModifier);
+
         rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
+
+        //if (yaw == 0)
+        //{
+        //    roller /= 1.1f;
+        //}
+        //else
+        //{
+        //    roller = -yaw;
+        //}
+        //Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
+
+        //rb.AddTorque(-transform.right * pitch * responseModifier);
+        //rb.AddTorque(transform.up * yaw * responseModifier);
+
+        //rb.AddForce(transform.forward * maxThrust * throttle);
+        //rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
 
     }
 
