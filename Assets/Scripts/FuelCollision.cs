@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FuelCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public AudioClip audioClip;
+
     void Start()
     {
-        
+        GetComponent<AudioSource>().clip = audioClip;
     }
 
     // Update is called once per frame
@@ -20,6 +22,7 @@ public class FuelCollision : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            GetComponent<AudioSource>().PlayOneShot(audioClip);
             FuelManager.Refuel();
             gameObject.SetActive(false);
             Invoke("ShowObject", 10f);

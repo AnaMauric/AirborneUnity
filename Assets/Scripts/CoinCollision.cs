@@ -11,7 +11,7 @@ public class CoinCollision : MonoBehaviour {
         aSrc = GetComponent<AudioSource>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private  void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player") {
             aSrc.Play();
