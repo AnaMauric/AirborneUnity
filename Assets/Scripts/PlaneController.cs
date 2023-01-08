@@ -13,7 +13,7 @@ public class PlaneController : MonoBehaviour {
     [Tooltip("How responsive the plane is when rolling, pitching and yawing.")]
     public float responsiveness = 3f;
     [Tooltip("How much lift force this plane generates as it gains speed.")]
-    public float lift = 300f;
+    public float lift = 400f;
 
     // Fuel Consupmtion is in FuelManager script
 
@@ -24,6 +24,8 @@ public class PlaneController : MonoBehaviour {
     Rigidbody rb;
     //[SerializeField] Text text;
 
+    private bool goingToMainMenu = false;
+
     private float throttle;
     private float roll;
     private float pitch;
@@ -33,13 +35,15 @@ public class PlaneController : MonoBehaviour {
 
     public GameObject textMeshProGameObject;
     private TextMeshProUGUI timeText;
+    private AudioSource audioSource;
 
     private float time = 0.0f;
 
-    private float roller = 0f;
+    private bool hasMovedBefore = false;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 
         // Time displayed in bottom left timer
         timeText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
@@ -66,20 +70,39 @@ public class PlaneController : MonoBehaviour {
         {
             throttle += throttleIncrement;
         }
-        else if (Input.GetKey(KeyCode.LeftControl))
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             throttle -= throttleIncrement;
         }
-            
+        
+        audioSource.volume = throttle/100f + 0.2f;
         throttle = Mathf.Clamp(throttle, 0f, 100f);
 
         // Hardcoded position of middle fire behind airplane - when the throttle is bigger it gets mroe out
-        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 75f);
+        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 80f);
         fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
+    // When player has won the game it waits 3 seconds before calling this function to return to main menu (in that time it plays the winning sound)
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+
     private void Update() {
 
+        if (CoinsManager.HasWon() && goingToMainMenu == false)
+        {
+            goingToMainMenu = true;
+            Invoke("GoToMainMenu", 3f);
+        }
+
+        if (throttle > 0f && hasMovedBefore == false)
+        {
+            hasMovedBefore = true;
+            audioSource.Play();
+        }
         // If player has won we don't want to decrement fuel and increment time, since game is over, but he is still flying for few seconds
         if (CoinsManager.HasWon() == false)
         {
@@ -100,12 +123,14 @@ public class PlaneController : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        rb.AddForce(transform.forward * maxThrust * throttle);
+        // here it should be Vector3.up - but then the torque also rolls the airplane, because its not perpendicular
         rb.AddTorque(transform.up * yaw * responseModifier);
         rb.AddTorque(-transform.right * pitch * responseModifier);
         rb.AddTorque(-transform.forward * roll * responseModifier);
 
-        rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
+        rb.AddForce(transform.forward * maxThrust * throttle);
+
+        rb.AddForce(transform.up * rb.velocity.magnitude * lift);
 
         //if (yaw == 0)
         //{

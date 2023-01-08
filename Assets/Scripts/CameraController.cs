@@ -34,16 +34,18 @@ public class CameraController : MonoBehaviour {
     private void LateUpdate() {
 
         Vector3 toPos= target.position + (target.rotation * distance);
+
         if(thirdPerson) {
             myT.position = Vector3.SmoothDamp(myT.position, toPos, ref velocity, smoothTime);
-            myT.LookAt(target, target.up);
+            //myT.LookAt(target, target.up);
 
             // Because of multiplying Vector3.forward, the camera rotates faster, since the target is more infront
 
             // Third rotatin is 0.0f because we dont want to rotate it in third person, change this when in first person
-            // Quaternion modifiedRotation = Quaternion.Euler(target.rotation.eulerAngles.x, target.rotation.eulerAngles.y, 0.0f);
-            // Vector3 targetPosition = target.position + modifiedRotation * Vector3.forward * 12.5f;
-            // myT.LookAt(targetPosition, Vector3.up);
+            float perspectiveBasedRotation = thirdPerson ? 0f : target.rotation.eulerAngles.z;
+            Quaternion modifiedRotation = Quaternion.Euler(target.rotation.eulerAngles.x, target.rotation.eulerAngles.y, perspectiveBasedRotation);
+            Vector3 targetPosition = target.position + modifiedRotation * Vector3.forward * 12.5f;
+            myT.LookAt(targetPosition, Vector3.up);
         } else {
             myT.position = target.position;
             myT.rotation = target.rotation;
