@@ -40,6 +40,7 @@ public class PlaneController : MonoBehaviour {
     private float time = 0.0f;
 
     private bool hasMovedBefore = false;
+    private float roller =  0.0f;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -124,30 +125,30 @@ public class PlaneController : MonoBehaviour {
     private void FixedUpdate() {
 
         // here it should be Vector3.up - but then the torque also rolls the airplane, because its not perpendicular
-        rb.AddTorque(transform.up * yaw * responseModifier);
+        /*rb.AddTorque(transform.up * yaw * responseModifier);
         rb.AddTorque(-transform.right * pitch * responseModifier);
         rb.AddTorque(-transform.forward * roll * responseModifier);
 
         rb.AddForce(transform.forward * maxThrust * throttle);
 
-        rb.AddForce(transform.up * rb.velocity.magnitude * lift);
+        rb.AddForce(transform.up * rb.velocity.magnitude * lift);*/
 
-        //if (yaw == 0)
-        //{
-        //    roller /= 1.1f;
-        //}
-        //else
-        //{
-        //    roller = -yaw;
-        //}
-        //Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
+        if (yaw == 0)
+        {
+            roller /= 1.1f;
+        }
+        else
+        {
+            roller = -yaw;
+        }
+        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
 
-        //rb.AddTorque(-transform.right * pitch * responseModifier);
-        //rb.AddTorque(transform.up * yaw * responseModifier);
+        rb.AddTorque(-transform.right * pitch * responseModifier);
+        rb.AddTorque(transform.up * yaw * responseModifier);
 
-        //rb.AddForce(transform.forward * maxThrust * throttle);
-        //rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
+        rb.AddForce(transform.forward * maxThrust * throttle);
+        rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
 
     }
 

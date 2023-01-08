@@ -19,19 +19,17 @@ public class ExplosionDestroyRestart : MonoBehaviour
         ps.Play();
         aSrc = GetComponent<AudioSource>();
         aSrc.Play();
-        Invoke("goToMainMenu", 2f);
-        Destroy(gameObject, 1.7f);
-
+        Invoke("GoToMainMenu", 2f);
+        //Destroy(gameObject, 1.7f);
     }
 
     void Update() {
         //if(!ps.IsAlive()) {
-    
+
         //}
     }
 
-    public void goToMainMenu()
-    {
+    public void GoToMainMenu() {
         SceneManager.LoadScene("MainMenu");
     }
 }
