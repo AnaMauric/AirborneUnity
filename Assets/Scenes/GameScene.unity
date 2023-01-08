@@ -2007,7 +2007,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413658956}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -2692,7 +2692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75568d60914ff434199e8ff8ada4d3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: e459d77df13abc44fb0972886a82e0f5, type: 3}
 --- !u!135 &717738799
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8979,8 +8978,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993663357}
   serializedVersion: 2
-  m_Mass: 800
-  m_Drag: 0.5
+  m_Mass: 600
+  m_Drag: 0.7
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -10120,7 +10119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 184.71
+      value: 183.82
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10136,15 +10135,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.99947315
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.032457504
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -3.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -10281,6 +10280,14 @@ PrefabInstance:
     - target: {fileID: 7551885535063421597, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109015249633046554, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109015249633046554, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
@@ -11377,7 +11384,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636867136}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
