@@ -2102,8 +2102,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29999924, y: 0}
-  m_SizeDelta: {x: 63.6836, y: 63.6836}
+  m_AnchoredPosition: {x: -0.68, y: 0}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427785450
 MonoBehaviour:
@@ -2372,7 +2372,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466027149}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.2711027, y: 2.000722, z: 2.4622076}
@@ -9014,7 +9014,7 @@ Rigidbody:
   m_GameObject: {fileID: 993663357}
   serializedVersion: 2
   m_Mass: 800
-  m_Drag: 0.3
+  m_Drag: 0.5
   m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -10154,7 +10154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 183.31
+      value: 184.71
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e554cf16961c146b04c315c7c96dde, type: 3}
       propertyPath: m_LocalPosition.z

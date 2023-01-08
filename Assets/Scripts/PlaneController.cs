@@ -79,7 +79,7 @@ public class PlaneController : MonoBehaviour {
         throttle = Mathf.Clamp(throttle, 0f, 100f);
 
         // Hardcoded position of middle fire behind airplane - when the throttle is bigger it gets mroe out
-        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 75f);
+        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 80f);
         fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
@@ -123,12 +123,14 @@ public class PlaneController : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        rb.AddForce(transform.forward * maxThrust * throttle);
+        // here it should be Vector3.up - but then the torque also rolls the airplane, because its not perpendicular
         rb.AddTorque(transform.up * yaw * responseModifier);
         rb.AddTorque(-transform.right * pitch * responseModifier);
         rb.AddTorque(-transform.forward * roll * responseModifier);
 
-        rb.AddForce(Vector3.up * rb.velocity.magnitude * lift);
+        rb.AddForce(transform.forward * maxThrust * throttle);
+
+        rb.AddForce(transform.up * rb.velocity.magnitude * lift);
 
         //if (yaw == 0)
         //{
