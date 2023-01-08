@@ -20,7 +20,7 @@ public class ExplosionDestroyRestart : MonoBehaviour
         aSrc = GetComponent<AudioSource>();
         aSrc.Play();
         Invoke("goToMainMenu", 2f);
-        Destroy(gameObject, aSrc.clip.length);
+        Destroy(gameObject, 1.7f);
 
     }
 

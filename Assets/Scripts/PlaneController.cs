@@ -13,7 +13,7 @@ public class PlaneController : MonoBehaviour {
     [Tooltip("How responsive the plane is when rolling, pitching and yawing.")]
     public float responsiveness = 3f;
     [Tooltip("How much lift force this plane generates as it gains speed.")]
-    public float lift = 300f;
+    public float lift = 400f;
 
     // Fuel Consupmtion is in FuelManager script
 
@@ -23,6 +23,8 @@ public class PlaneController : MonoBehaviour {
 
     Rigidbody rb;
     //[SerializeField] Text text;
+
+    private bool goingToMainMenu = false;
 
     private float throttle;
     private float roll;
@@ -36,8 +38,6 @@ public class PlaneController : MonoBehaviour {
     private AudioSource audioSource;
 
     private float time = 0.0f;
-
-    private float roller = 0f;
 
     private bool hasMovedBefore = false;
 
@@ -70,7 +70,7 @@ public class PlaneController : MonoBehaviour {
         {
             throttle += throttleIncrement;
         }
-        else if (Input.GetKey(KeyCode.LeftControl))
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             throttle -= throttleIncrement;
         }
@@ -83,7 +83,20 @@ public class PlaneController : MonoBehaviour {
         fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
     }
 
+    // When player has won the game it waits 3 seconds before calling this function to return to main menu (in that time it plays the winning sound)
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+
     private void Update() {
+
+        if (CoinsManager.HasWon() && goingToMainMenu == false)
+        {
+            goingToMainMenu = true;
+            Invoke("GoToMainMenu", 3f);
+        }
 
         if (throttle > 0f && hasMovedBefore == false)
         {

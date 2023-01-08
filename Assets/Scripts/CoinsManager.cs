@@ -14,7 +14,7 @@ public class CoinsManager : MonoBehaviour
 
     public GameObject textMeshProGameObject;
     private static TextMeshProUGUI leftCoinsText;
-
+    public static AudioSource aSrc = null;
 
     public static void pickedUp()
     {
@@ -24,8 +24,8 @@ public class CoinsManager : MonoBehaviour
 
         if (HasWon())
         {
-            Debug.Log("you've won the game bro");
-            SceneManager.LoadScene("MainMenu");
+            aSrc.Play(); // play winning sound
+
         }
 
     }
@@ -42,18 +42,13 @@ public class CoinsManager : MonoBehaviour
         return pickedUpCoins == amountOfCoins;
     }
 
-    public static void WonGame()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
         amountOfCoins = transform.childCount;
         pickedUpCoins = 0;
         leftCoinsText = textMeshProGameObject.GetComponent<TextMeshProUGUI>();
+        aSrc = GetComponent<AudioSource>();
         SetUpCoinsText();
     }
 
