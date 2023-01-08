@@ -18,7 +18,7 @@ public class CoinsManager : MonoBehaviour
 
     public static void pickedUp()
     {
-        pickedUpCoins += 9;
+        pickedUpCoins += 1;
 
         SetUpCoinsText();
 
