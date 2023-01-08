@@ -11,7 +11,6 @@ public class BestScore : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.DeleteKey("bestScore");
         float score = PlayerPrefs.GetFloat("score", 0);
         float bestScore = PlayerPrefs.GetFloat("bestScore", 0);
 

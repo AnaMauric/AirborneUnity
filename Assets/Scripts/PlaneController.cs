@@ -145,7 +145,9 @@ public class PlaneController : MonoBehaviour {
         {
             roller = -yaw;
         }
-        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
+        // horrible solution
+
+        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 60.0f);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
 
         rb.AddTorque(-transform.right * pitch * responseModifier);
