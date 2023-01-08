@@ -80,8 +80,12 @@ public class PlaneController : MonoBehaviour {
         throttle = Mathf.Clamp(throttle, 0f, 100f);
 
         // Hardcoded position of middle fire behind airplane - when the throttle is bigger it gets mroe out
-        Vector3 newFirePos = new Vector3(0f, 0f, 9f + (100f - throttle) / 80f);
-        fire.transform.localPosition = Vector3.Lerp(fire.transform.localPosition, newFirePos, Time.deltaTime * 3);
+        Vector3 newFireScale = new Vector3(1f, 0.59f + throttle / 145f, 1f);
+        if (hasMovedBefore == false)
+        {
+            newFireScale = new Vector3(1f, 0f, 1f);
+        }
+        fire.transform.localScale = Vector3.Lerp(fire.transform.localScale, newFireScale, Time.deltaTime * 3);
     }
 
     // When player has won the game it waits 3 seconds before calling this function to return to main menu (in that time it plays the winning sound)
@@ -141,7 +145,9 @@ public class PlaneController : MonoBehaviour {
         {
             roller = -yaw;
         }
-        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 45.0f);
+        // horrible solution
+
+        Quaternion newRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, roller * 60.0f);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.021f);
 
         rb.AddTorque(-transform.right * pitch * responseModifier);

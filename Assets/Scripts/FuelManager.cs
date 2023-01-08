@@ -9,6 +9,13 @@ public class FuelManager : MonoBehaviour {
     public static GameObject fuelObject = null;
 
 
+    void Update()
+    {
+        //if (fuel/initialFuel < 0.15)
+        //{
+        //    if (aSrc.isPlaying == false) aSrc.Play();
+        //}
+    }
     public static bool HasEmptyFuel()
     {
         return fuel <= 0;
@@ -18,5 +25,6 @@ public class FuelManager : MonoBehaviour {
     {
         fuel = initialFuel;
     }
+
 
 }
